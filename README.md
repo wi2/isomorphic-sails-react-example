@@ -1,8 +1,10 @@
 # Isomorphic example with React and sails
 
+A very simple real time application
+
 ### with
-[Sails](http://sailsjs.org) 
-[React](https://facebook.github.io/react/)  
+[Sails](http://sailsjs.org)
+[React](https://facebook.github.io/react/)
 [React-router](http://rackt.github.io/react-router/)  A complete routing solution for React.js
 [sails-react-store](https://github.com/wi2/sails-react-store) wrapper of sails.socket.io with auto blueprint
 [sails-generate-isoreact](https://github.com/wi2/sails-generate-isoreact) simple starter kit
@@ -18,3 +20,11 @@ $ npm install
 $ sails lift
 ```
 
+
+### test real time
+go to http://localhost:1337
+and click on articles and write in another console :
+
+```sh
+$ curl -H "Content-Type: application/json" -X POST -d '{"title": "post 1"}' http://localhost:1337/post
+```
