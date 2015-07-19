@@ -22742,15 +22742,16 @@ var ReactItem = (function (_ReactBase) {
   }, {
     key: 'update',
     value: function update(data) {
-      this.setState({ item: data });
+      this.store.setItems(data);
+      this.forceUpdate();
     }
   }, {
     key: 'render',
     value: function render() {
-      var item = this.state ? this.state.item : this.props.item;
+      var item = this.store ? this.store.value : this.props.item;
       return _react2['default'].createElement(
         'li',
-        { className: '{identity}-item' },
+        { className: '{this.identity}-item' },
         _react2['default'].createElement(
           'p',
           null,
@@ -22822,8 +22823,7 @@ var ReactCollection = (function (_ReactBase) {
       if (!this.props.items) {
         this.store.get();
       } else {
-        this.store.setItems(this.props.items);
-        this.setState({ items: this.props.items });
+        this.update(this.props.items);
       }
       this.store.on('add', this.update.bind(this));
       this.store.on('remove', this.update.bind(this));
@@ -22832,7 +22832,8 @@ var ReactCollection = (function (_ReactBase) {
   }, {
     key: 'update',
     value: function update(data) {
-      this.setState({ items: data });
+      this.store.setItems(data);
+      this.forceUpdate();
     }
   }, {
     key: 'render',
@@ -22840,10 +22841,11 @@ var ReactCollection = (function (_ReactBase) {
       var _this = this;
 
       var Item = this.reactItem || _collectionItemJs.ReactItem;
+      var items = this.store ? this.store.value : this.props.items;
       return _react2['default'].createElement(
         'ul',
         { className: '{identity}-list' },
-        this.state.items.map(function (item, i) {
+        items.map(function (item, i) {
           return _react2['default'].createElement(Item, { identity: _this.props.identity, key: i, item: item, buttons: _this.props.buttons, belongs: _this.belongs });
         })
       );
@@ -23017,6 +23019,7 @@ var StoreCollection = (function (_Store) {
     _get(Object.getPrototypeOf(StoreCollection.prototype), 'constructor', this).call(this, props);
     this.value = props.items || [];
     this.items = props.items;
+    this.update(this.value);
     this.on('sync', this.findAndUpdate.bind(this));
   }
 
@@ -23051,30 +23054,12 @@ var StoreCollection = (function (_Store) {
   }, {
     key: 'findAndUpdate',
     value: function findAndUpdate(data) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = this.value[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var val = _step.value;
-
-          if (val.id === data.id) Object.assign(val, data);
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator['return']) {
-            _iterator['return']();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
+      for (var i = 0, len = this.value.length; i < len; i++) if (this.value[i].id === data.id) this.objectAssign(this.value[i], data);
+    }
+  }, {
+    key: 'setItems',
+    value: function setItems(data) {
+      this.value = data;
     }
   }, {
     key: 'onChange',

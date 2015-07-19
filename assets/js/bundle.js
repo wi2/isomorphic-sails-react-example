@@ -89,8 +89,6 @@ var _default = (function (_React$Component) {
   _createClass(_default, [{
     key: 'render',
     value: function render() {
-      console.log(this);
-
       return _react2['default'].createElement(
         _layoutJs.Layout,
         null,
