@@ -89,6 +89,8 @@ var _default = (function (_React$Component) {
   _createClass(_default, [{
     key: 'render',
     value: function render() {
+      console.log(this);
+
       return _react2['default'].createElement(
         _layoutJs.Layout,
         null,
@@ -196,10 +198,11 @@ var Item = (function (_ReactItem) {
   _createClass(Item, [{
     key: 'render',
     value: function render() {
+      var item = this.state ? this.state.item : this.props.item;
       return _react2['default'].createElement(
         'h5',
         { className: 'doc-title' },
-        this.props.item.title
+        item.title
       );
     }
   }]);
@@ -247,7 +250,7 @@ var List = (function (_ReactCollection) {
     value: function render() {
       var _this = this;
 
-      var Item = this.reactItem || ReactItem,
+      var Item = this.reactItem || _sailsReactStore.ReactItem,
           myitems = this.props.items || this.state.items || [];
       return _react2['default'].createElement(
         'div',

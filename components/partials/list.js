@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react'
-import {ReactCollection} from 'sails-react-store'
+import {ReactItem, ReactCollection} from 'sails-react-store'
 
 export class List extends ReactCollection {
   constructor(props) {

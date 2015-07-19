@@ -6,10 +6,12 @@ import {List} from '../partials/list.js'
 
 export default class extends React.Component {
   render() {
+    console.log(this);
+
     return (
       <Layout>
         <h1>Articles</h1>
-        <List identity="post" {...this.props}/>
+        <List identity="post" {...this.props} />
       </Layout>
     );
   }

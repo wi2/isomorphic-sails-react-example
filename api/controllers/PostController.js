@@ -13,7 +13,6 @@ module.exports = {
   },
   articles: function(req, res) {
     Post.find().exec(function(err, posts){
-      console.log(posts);
       renderTo(routes, res.view, '/articles', {title:'articles'}, {items:posts});
     });
   }

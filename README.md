@@ -21,6 +21,18 @@ $ sails lift
 ```
 
 
+
+### dependencies : Browserify
+```sh
+$ npm install -g browserify
+```
+##### regenerate dependencies
+```sh
+$ browserify -r react -r react-router -r sails-react-store > assets/js/dependencies/build.js
+```
+
+
+
 ### test real time
 go to http://localhost:1337
 and click on articles and write in another console :
