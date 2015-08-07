@@ -39,4 +39,6 @@ and click on articles and write in another console :
 
 ```sh
 $ curl -H "Content-Type: application/json" -X POST -d '{"title": "post 1", "content": "It's my first post..."}' http://localhost:1337/post
+$ curl -H "Content-Type: application/json" -X POST -d '{"title": "post 2", "content": "It's my second post..."}' http://localhost:1337/post
+$ curl -H "Content-Type: application/json" -X POST -d '{"title": "post 3", "content": "It's my third post..."}' http://localhost:1337/post
 ```
