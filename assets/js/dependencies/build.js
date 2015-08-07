@@ -22804,11 +22804,10 @@ var _collectionItemJs = require('./collection-item.js');
 var _sailsStore = require('sails-store');
 
 var ReactCollection = (function (_ReactBase) {
-  function ReactCollection(props) {
+  function ReactCollection() {
     _classCallCheck(this, ReactCollection);
 
-    _get(Object.getPrototypeOf(ReactCollection.prototype), 'constructor', this).call(this, props);
-    this.state = { items: [] };
+    _get(Object.getPrototypeOf(ReactCollection.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _inherits(ReactCollection, _ReactBase);
@@ -22820,11 +22819,8 @@ var ReactCollection = (function (_ReactBase) {
         identity: this.identity
       });
       //
-      if (!this.props.items) {
-        this.store.get();
-      } else {
-        this.update(this.props.items);
-      }
+      if (!this.props.items) this.store.get();else this.update(this.props.items);
+      //
       this.store.on('add', this.update.bind(this));
       this.store.on('remove', this.update.bind(this));
       this.store.on('update', this.update.bind(this));
@@ -22832,8 +22828,13 @@ var ReactCollection = (function (_ReactBase) {
   }, {
     key: 'update',
     value: function update(data) {
+      this.setState({ items: data });
       this.store.setItems(data);
-      this.forceUpdate();
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(props, state) {
+      return props !== this.store.value;
     }
   }, {
     key: 'render',
@@ -22856,6 +22857,8 @@ var ReactCollection = (function (_ReactBase) {
 })(_baseJs.ReactBase);
 
 exports.ReactCollection = ReactCollection;
+
+_collectionItemJs.ReactItem.propTypes = { items: _react2['default'].PropTypes.array };
 },{"./base.js":193,"./collection-item.js":194,"react":"react","sails-store":204}],196:[function(require,module,exports){
 'use strict';
 

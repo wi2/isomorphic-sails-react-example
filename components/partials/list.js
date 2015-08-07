@@ -10,7 +10,7 @@ export class List extends ReactCollection {
   }
   render() {
     let Item = this.reactItem||ReactItem
-      , myitems = this.props.items||this.state.items||[];
+      , myitems = this.store ? this.store.value : this.props.items||[];
     return (
       <div id="list" className="pure-u-1">
         {myitems.map( (item,i) => {

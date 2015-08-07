@@ -196,7 +196,7 @@ var Item = (function (_ReactItem) {
   _createClass(Item, [{
     key: 'render',
     value: function render() {
-      var item = this.state ? this.state.item : this.props.item;
+      var item = this.store ? this.store.value : this.props.item;
       return _react2['default'].createElement(
         'h5',
         { className: 'doc-title' },
@@ -249,7 +249,7 @@ var List = (function (_ReactCollection) {
       var _this = this;
 
       var Item = this.reactItem || _sailsReactStore.ReactItem,
-          myitems = this.props.items || this.state.items || [];
+          myitems = this.store ? this.store.value : this.props.items || [];
       return _react2['default'].createElement(
         'div',
         { id: 'list', className: 'pure-u-1' },
