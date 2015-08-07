@@ -9,7 +9,7 @@ Router.run(require('./routes.js'), Router.HistoryLocation, function (Root) {
   delete window.__ReactInitState__;
 });
 
-},{"./routes.js":8,"react":"react","react-router":"react-router"}],2:[function(require,module,exports){
+},{"./routes.js":10,"react":"react","react-router":"react-router"}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -50,7 +50,60 @@ var Layout = (function () {
 
 exports.Layout = Layout;
 
-},{"./partials/nav.js":7,"react":"react"}],3:[function(require,module,exports){
+},{"./partials/nav.js":8,"react":"react"}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _layoutJs = require('../layout.js');
+
+var _partialsViewJs = require('../partials/view.js');
+
+var _default = (function (_React$Component) {
+  _inherits(_default, _React$Component);
+
+  function _default() {
+    _classCallCheck(this, _default);
+
+    _get(Object.getPrototypeOf(_default.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(_default, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        _layoutJs.Layout,
+        null,
+        _react2['default'].createElement(_partialsViewJs.View, _extends({ identity: 'post' }, this.props))
+      );
+    }
+  }]);
+
+  return _default;
+})(_react2['default'].Component);
+
+exports['default'] = _default;
+module.exports = exports['default'];
+
+},{"../layout.js":2,"../partials/view.js":9,"react":"react"}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -108,7 +161,7 @@ var _default = (function (_React$Component) {
 exports['default'] = _default;
 module.exports = exports['default'];
 
-},{"../layout.js":2,"../partials/list.js":6,"react":"react"}],4:[function(require,module,exports){
+},{"../layout.js":2,"../partials/list.js":7,"react":"react"}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -161,7 +214,7 @@ var _default = (function (_React$Component) {
 exports['default'] = _default;
 module.exports = exports['default'];
 
-},{"../layout.js":2,"react":"react"}],5:[function(require,module,exports){
+},{"../layout.js":2,"react":"react"}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -184,6 +237,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _sailsReactStore = require('sails-react-store');
 
+var _reactRouter = require('react-router');
+
 var Item = (function (_ReactItem) {
   _inherits(Item, _ReactItem);
 
@@ -198,9 +253,13 @@ var Item = (function (_ReactItem) {
     value: function render() {
       var item = this.store ? this.store.value : this.props.item;
       return _react2['default'].createElement(
-        'h5',
-        { className: 'doc-title' },
-        item.title
+        _reactRouter.Link,
+        { to: 'article', params: { id: this.props.item.id } },
+        _react2['default'].createElement(
+          'h5',
+          { className: 'doc-title' },
+          item.title
+        )
       );
     }
   }]);
@@ -210,7 +269,7 @@ var Item = (function (_ReactItem) {
 
 exports.Item = Item;
 
-},{"react":"react","sails-react-store":"sails-react-store"}],6:[function(require,module,exports){
+},{"react":"react","react-router":"react-router","sails-react-store":"sails-react-store"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -269,7 +328,7 @@ var List = (function (_ReactCollection) {
 
 exports.List = List;
 
-},{"./item.js":5,"react":"react","sails-react-store":"sails-react-store"}],7:[function(require,module,exports){
+},{"./item.js":6,"react":"react","sails-react-store":"sails-react-store"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -330,7 +389,65 @@ var Nav = (function () {
 
 exports.Nav = Nav;
 
-},{"react":"react","react-router":"react-router"}],8:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _sailsReactStore = require('sails-react-store');
+
+var View = (function (_ReactItem) {
+  _inherits(View, _ReactItem);
+
+  function View() {
+    _classCallCheck(this, View);
+
+    _get(Object.getPrototypeOf(View.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(View, [{
+    key: 'render',
+    value: function render() {
+      var item = this.store ? this.store.value : this.props.item || {};
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(
+          'h1',
+          { className: 'doc-title' },
+          item.title
+        ),
+        _react2['default'].createElement(
+          'p',
+          { className: 'doc-content' },
+          item.content || ''
+        )
+      );
+    }
+  }]);
+
+  return View;
+})(_sailsReactStore.ReactItem);
+
+exports.View = View;
+
+},{"react":"react","sails-react-store":"sails-react-store"}],10:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -345,7 +462,8 @@ module.exports = _react2['default'].createElement(
   _reactRouter.Route,
   { handler: _reactRouter.RouteHandler },
   _react2['default'].createElement(_reactRouter.Route, { name: 'home', path: '/', handler: require('./pages/home.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'articles', path: '/articles', handler: require('./pages/articles.js') })
+  _react2['default'].createElement(_reactRouter.Route, { name: 'articles', path: '/articles', handler: require('./pages/articles.js') }),
+  _react2['default'].createElement(_reactRouter.Route, { name: 'article', path: '/article/:id', handler: require('./pages/article.js') })
 );
 
-},{"./pages/articles.js":3,"./pages/home.js":4,"react":"react","react-router":"react-router"}]},{},[1,2,3,4,5,6,7,8]);
+},{"./pages/article.js":3,"./pages/articles.js":4,"./pages/home.js":5,"react":"react","react-router":"react-router"}]},{},[1,2,3,4,5,6,7,8,9,10]);

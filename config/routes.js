@@ -33,7 +33,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': 'PostController.home',
-  '/articles': 'PostController.articles'
+  '/articles': 'PostController.articles',
+  '/article/:id': 'PostController.article'
 
   /***************************************************************************
   *                                                                          *
