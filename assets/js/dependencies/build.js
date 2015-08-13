@@ -22818,8 +22818,7 @@ var ReactCollection = (function (_ReactBase) {
       this.store = new _sailsStore.StoreCollection({
         identity: this.identity
       });
-      //
-      if (!this.props.items) this.store.get();else this.update(this.props.items);
+      this.store.get();
       //
       this.store.on('add', this.update.bind(this));
       this.store.on('remove', this.update.bind(this));
@@ -22834,7 +22833,7 @@ var ReactCollection = (function (_ReactBase) {
   }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate(props, state) {
-      return props !== this.store.value;
+      return props !== state;
     }
   }, {
     key: 'render',
@@ -23021,7 +23020,6 @@ var StoreCollection = (function (_Store) {
 
     _get(Object.getPrototypeOf(StoreCollection.prototype), 'constructor', this).call(this, props);
     this.value = props.items || [];
-    this.items = props.items;
     this.update(this.value);
     this.on('sync', this.findAndUpdate.bind(this));
   }
@@ -23141,8 +23139,7 @@ var StoreItem = (function (_Store) {
 
     _get(Object.getPrototypeOf(StoreItem.prototype), 'constructor', this).call(this, props);
     this.value = {};
-    this.objectAssign(this.value, props.value);
-    this.socket.adjustUrlWithId(this.value.id);
+    this.setItems(props.value);
   }
 
   _inherits(StoreItem, _Store);
@@ -23199,7 +23196,6 @@ var Store = (function (_Base) {
       identity: props.identity,
       root: props.root
     });
-    this.listening = false;
     this.startListening();
   }
 
@@ -23279,19 +23275,20 @@ var Transport = (function () {
     }
   }, {
     key: "get",
-    value: function get(cb) {
+    value: function get(data, cb) {
+      if (typeof data === "function") cb = data;
       if (!this.socket) return;
       this.socket.get(this.url, cb);
     }
   }, {
     key: "post",
-    value: function post(cb) {
+    value: function post(data, cb) {
       if (!this.socket) return;
       this.socket.post(this.url, data, cb);
     }
   }, {
     key: "put",
-    value: function put(cb) {
+    value: function put(data, cb) {
       if (!this.socket) return;
       this.socket.put(this.url, data, cb);
     }

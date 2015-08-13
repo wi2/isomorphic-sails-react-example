@@ -28,7 +28,7 @@
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
     "sails-hook-babel": "^5.0.1",
-    "sails-react-store": "^0.2.9"
+    "sails-react-store": "^0.2.10"
   },
   "scripts": {
     "start": "node app.js",
