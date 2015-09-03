@@ -5,7 +5,7 @@ import {ReactItem} from 'sails-react-store'
 
 export class View extends ReactItem {
   render() {
-    let item = this.store ? this.store.value : this.props.item||{};
+    let item = this.state.item;
     return (
       <div>
         <h1 className="doc-title">{item.title}</h1>

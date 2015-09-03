@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
   grunt.config.set('browserify', {
     options: {
-      external: ['react', 'react-router', 'sails-react-store'],
+      external: ['react', 'react-router', 'sails-store', 'sails-react-store'],
       transform: [
         [require("babelify"), require('grunt-react').browserify]
       ],
