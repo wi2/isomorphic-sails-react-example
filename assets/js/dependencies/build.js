@@ -22678,12 +22678,12 @@ var ReactBase = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2['default'].createElement('div', { className: this.props.identity + '-section' });
+      return _react2['default'].createElement('div', { className: (this.props.identity || 'div') + '-section' });
     }
   }], [{
     key: 'propTypes',
     value: {
-      identity: _react2['default'].PropTypes.string.isRequired
+      identity: _react2['default'].PropTypes.string
     },
     enumerable: true
   }]);
@@ -23069,32 +23069,21 @@ var ReactItem = (function (_ReactBase) {
   _inherits(ReactItem, _ReactBase);
 
   _createClass(ReactItem, [{
-    key: 'update',
-    value: function update(data) {
-      if (data !== this.state.item) {
-        this.setState({ item: data });
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(newProps, newState) {
+      if (newProps.params) {
+        this.deleteStore();
+        this.createStore(newProps.identity, newProps.params);
+        this.store.get();
+        delete this.props.params;
+        return false;
       }
-    }
-  }, {
-    key: 'storage',
-    value: function storage() {
-      var item = this.props.params ? this.props.params : this.props.item;
-      delete this.props.params;
-      if (!this.store) {
-        this.store = new _sailsStore.StoreItem({
-          identity: this.props.identity,
-          value: item,
-          belongs: this.props.belongs
-        });
-        this.store.startListening();
-        this.store.on('update', this.update.bind(this));
-      }
-      if (!item.createdAt) this.store.get();
+      return true;
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.storage();
+      if (this.props.params && this.props.item && !this.props.item.id) this.setState(this.props.params);else this.storage();
     }
   }, {
     key: 'componentWillUpdate',
@@ -23104,6 +23093,32 @@ var ReactItem = (function (_ReactBase) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      this.deleteStore();
+    }
+  }, {
+    key: 'update',
+    value: function update(data) {
+      if (data !== this.state.item) this.setState({ item: data });
+    }
+  }, {
+    key: 'storage',
+    value: function storage() {
+      var item = this.state.item;
+      this.createStore(this.props.identity, item);
+      if (!item.createdAt) this.store.get();
+    }
+  }, {
+    key: 'createStore',
+    value: function createStore(identity, value) {
+      if (!this.store) {
+        this.store = new _sailsStore.StoreItem({ identity: identity, value: value });
+        this.store.startListening();
+        this.store.on('update', this.update.bind(this));
+      }
+    }
+  }, {
+    key: 'deleteStore',
+    value: function deleteStore() {
       if (this.store) {
         this.store.stopListening();
         delete this.store;
@@ -23209,9 +23224,7 @@ var StoreCollection = (function (_Store) {
       if (id.id) id = id.id;
       var key;
       for (var i = 0, len = this.value.length; i < len; i++) {
-        if (this.value[i].id == id) {
-          key = i;
-        }
+        if (this.value[i].id == id) key = i;
       }
       this._value = this.value.splice(key, 1);
       this.emit('remove', this.value);
@@ -23339,16 +23352,15 @@ var StoreItem = (function (_Store) {
   }, {
     key: 'update',
     value: function update(data) {
-      // data.id = this.value.id;
+      if (Array.isArray(data)) return;
       var tmp = this.value.merge(data);
-      if (Array.isArray(tmp.data)) this._value = this._value.set('data', data); //this.value.merge(data)
-      else this._value = tmp;
+      this._value = Array.isArray(tmp.data) ? this._value.set('data', data) : tmp;
       this.emit('update', this.value);
     }
   }, {
     key: 'onChange',
     value: function onChange(msg) {
-      if (msg.verb === 'updated' && msg.id == this.value.id) {
+      if (msg.verb === 'updated' && msg.data && msg.id == this.value.id) {
         this.update(msg.data);
       }
     }
